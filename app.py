@@ -93,6 +93,11 @@ def predict_image_with_cnn(image):
 # Streamlit app layout
 st.title("Face Recognition of Celebrity")
 st.write("Upload an image of a person to predict their identity.")
+# Modal Popup for Instructions
+with st.expander("The Evolution and Impact of Celebrity Face Recognition Technology", expanded=False):
+    st.write(
+        "Face recognition technology, particularly in the context of celebrity identification, has become a powerful tool in various applications, from security to entertainment. By leveraging advanced deep learning models and pretrained architectures, systems can accurately analyze facial features and match them against a vast database of known identities. The integration of machine learning with facial recognition not only enhances user experience by providing quick and accurate results but also opens up creative avenues in the realm of digital art and social media, where filters and effects can further transform and emphasize celebrity images. As technology continues to evolve, the potential for face recognition in recognizing and celebrating public figures only expands, making it an engaging and impactful field."
+    )
 
 # Modal Popup for Instructions
 with st.expander("The Evolution and Impact of Celebrity Face Recognition Technology", expanded=False):
