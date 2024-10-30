@@ -1,0 +1,8 @@
+streamlit
+opencv-python
+numpy==1.26.3
+tensorflow
+scikit-learn
+Pillow
+joblib
+gdown
