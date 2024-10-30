@@ -4,45 +4,46 @@ import numpy as np
 from tensorflow.keras.models import load_model
 import joblib
 import gdown
+import os
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import ZeroPadding2D, Convolution2D, MaxPooling2D, Dropout, Flatten, Activation
 
 def vgg_face():
     model = Sequential()
-    model.add(ZeroPadding2D((1,1), input_shape=(224, 224, 3)))
+    model.add(ZeroPadding2D((1, 1), input_shape=(224, 224, 3)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
 
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(128, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(128, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
 
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(256, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
 
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
 
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
-    model.add(ZeroPadding2D((1,1)))
+    model.add(ZeroPadding2D((1, 1)))
     model.add(Convolution2D(512, (3, 3), activation='relu'))
     model.add(MaxPooling2D((2, 2), strides=(2, 2)))
 
@@ -58,10 +59,12 @@ def vgg_face():
 # Load VGG model
 model = vgg_face()
 
-# Download model weights from Google Drive
-file_id = '1xzSU8THiNVlX0ECQ2ALPQKbnGMw8zWEv'  # Replace with your actual file ID
+# Check if weights file exists
 destination = 'vgg_face_weights.h5'
-gdown.download(f'https://drive.google.com/uc?id={file_id}', destination, quiet=False)
+if not os.path.exists(destination):
+    # Download model weights from Google Drive
+    file_id = '1xzSU8THiNVlX0ECQ2ALPQKbnGMw8zWEv'  # Replace with your actual file ID
+    gdown.download(f'https://drive.google.com/uc?id={file_id}', destination, quiet=False)
 
 # Load the weights
 model.load_weights(destination)
@@ -93,12 +96,6 @@ def predict_image_with_cnn(image):
 # Streamlit app layout
 st.title("Face Recognition of Celebrity")
 st.write("Upload an image of a person to predict their identity.")
-# Modal Popup for Instructions
-with st.expander("The Evolution and Impact of Celebrity Face Recognition Technology", expanded=False):
-    st.write(
-        "Face recognition technology, particularly in the context of celebrity identification, has become a powerful tool in various applications, from security to entertainment. By leveraging advanced deep learning models and pretrained architectures, systems can accurately analyze facial features and match them against a vast database of known identities. The integration of machine learning with facial recognition not only enhances user experience by providing quick and accurate results but also opens up creative avenues in the realm of digital art and social media, where filters and effects can further transform and emphasize celebrity images. As technology continues to evolve, the potential for face recognition in recognizing and celebrating public figures only expands, making it an engaging and impactful field."
-    )
-
 # Modal Popup for Instructions
 with st.expander("The Evolution and Impact of Celebrity Face Recognition Technology", expanded=False):
     st.write(
